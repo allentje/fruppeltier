@@ -1,0 +1,43 @@
+version: '3.7'
+
+networks:
+  fruppeltier-network:
+    driver: bridge
+
+services:
+  nginx_dev:
+    image: nginx
+    container_name: nginx_fruppeltier
+    restart: always
+    hostname: nginx_fruppeltier
+    ports:
+      - '80:80'
+    environment:
+      docker: "true"
+      VIRTUAL_HOST: "fruppeltier.de"
+    volumes:
+      - ${PWD}/public:/usr/share/nginx/html:rw
+
+  node_modules:
+    image: node:12.13.0-buster
+    container_name: fruppeltier_node_modules
+    command: bash -c "cd /home && npm ci"
+    volumes:
+      - ${PWD}:/home:rw
+
+  nginx_prod:
+    build:
+      context: .
+    container_name: nginx_fruppeltier
+    restart: always
+    hostname: fruppeltier.de
+    environment:
+      docker: "true"
+      VIRTUAL_HOST: "fruppeltier.de"
+      LETSENCRYPT_HOST: "fruppeltier.de"
+      LETSENCRYPT_EMAIL: 'someonesmail@butnotmy.com'
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - fruppeltier-network

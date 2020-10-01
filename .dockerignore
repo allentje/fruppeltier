@@ -1,0 +1,26 @@
+# Unwanted folders and files to ignore in docker build
+
+# Exclude unwanted hidden files and directories
+.env.example
+.dockerignore
+*.git*
+*.idea*
+
+# Exclude some unwanted directories
+deployment
+configs
+Docker
+db
+tests
+
+# Include files in sub folders for exclusion
+**/Dockerfile
+**/docker-compose.yml
+
+# Other unwanted files in root directory
+Vagrantfile
+phpunit.xml
+.travis.yml
+.profile
+.coveralls.yml
+docker-compose.yml

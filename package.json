@@ -1,0 +1,13 @@
+{
+  "name": "fruppeltier",
+  "version": "1.0.0",
+  "description": "Website from fruppeltier.de",
+  "main": "index.html",
+  "keywords": [],
+  "author": "Dominic LInke",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "bulma": "^0.9.0"
+  }
+}
