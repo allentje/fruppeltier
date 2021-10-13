@@ -49,4 +49,4 @@ jobs:
           context: .
           push: true
           tags: latest
-          labels: ${{ env.REGISTRY }}:latest
+          labels: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
