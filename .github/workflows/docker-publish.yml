@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ${{ secrets.REGISTRY }}
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: fruppeltier
   REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
   REGISTRY_PASS: ${{ secrets.REGISTRY_PASSWORD }}
 
