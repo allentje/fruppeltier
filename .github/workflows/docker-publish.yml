@@ -32,7 +32,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ env.REGISTRY_USER }}
-          password: ${{ env.REGISTRY_PASSWORD }}
+          password: ${{ env.REGISTRY_PASS }}
 
       # Extract metadata (tags, labels) for Docker
       - name: Extract Docker metadata
