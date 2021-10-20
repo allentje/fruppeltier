@@ -35,5 +35,5 @@ docker run --name nginx_fruppeltier -d \
     -e VIRTUAL_HOST=fruppeltier.de \
     -e LETSENCRYPT_HOST=fruppeltier.de" \
     -e LETSENCRYPT_EMAIL=someonesmail@butnotmy.com" \
-    fruppeltier_nginx_prod
+    fruppeltier
 ```
