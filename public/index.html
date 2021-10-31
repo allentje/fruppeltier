@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="css/fa-all.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/nyanCat.css">
+    <link id="theme-mode" rel="stylesheet" href="css/theme/dark-theme.css">
+    <script type="text/javascript" src="js/theme-mode.js"></script>
 </head>
 <body>
-<section class="hero is-dark">
+<section class="hero is-dark" id="main">
     <iframe src="audio/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
     <div class="hero-body">
         <div class="container">
@@ -23,6 +25,7 @@
             <h2 class="subtitle">
                 stellv. TL Softwareentwicklung bei CHECK24 Team WOHNGEBÄUDE!!11elf!!
             </h2>
+
             <div class="container is-widescreen level">
                 <span class="icon level-left links">
                     <a class="level-item"  href="https://github.com/fruppel" target="_blank"><i class="fab fa-github fa-2x"></i></a>
@@ -30,6 +33,7 @@
                     <a class="level-item" href="https://www.facebook.com/florian.ruppel" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
                 </span>
             </div>
+            <button id="theme-toggle">Light mode</button>
             <audio id="theme-song" class="audio-control" controls autoplay loop src="https://fruppeltier.de/audio/audio_nyan-cat.ogg"></audio>
         </div>
     </div>
