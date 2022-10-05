@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/nyanCat.css">
     <link id="theme-mode" rel="stylesheet" href="css/theme/dark-theme.css">
     <script type="text/javascript" src="js/theme-mode.js"></script>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
 </head>
 <body>
 <section class="hero is-dark" id="main">
@@ -38,6 +39,11 @@
         </div>
     </div>
 </section>
+<script>
+    if([0,1,11].includes(new Date().getMonth())) {
+        new Snowflakes();
+    }
+</script>
 </body>
 <footer class="footer container">
     <div class="content has-text-centered">
