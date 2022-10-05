@@ -21,4 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionTheme.classList.remove('is-dark')
 
     })
+
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        themeToggle.click();
+    }
 })
