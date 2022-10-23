@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/nyanCat.css">
     <link id="theme-mode" rel="stylesheet" href="css/theme/dark-theme.css">
     <script type="text/javascript" src="js/theme-mode.js"></script>
+    <script type="text/javascript" src="js/nyan-cat-draw.js">/script>
     <script src="js/snowflakes.min.js"></script>
     <script src="js/website-carbon-badges@1.1.3.min.js" defer></script>
 </head>
@@ -80,6 +81,19 @@
         .##.......##...##...##.....##.##........##........##.......##..........##.....##..##.......##...##..
         .##.......##....##..##.....##.##........##........##.......##..........##.....##..##.......##....##.
         .##.......##.....##..#######..##........##........########.########....##....####.########.##.....##
+    </div>
+    <div>
+        <button id="draw-toggle">Draw nyan cat</button>
+        <div id="draw-container" style="display: none">
+            <div class="draw-navbar">
+                <button id="btnReset" class="btn">Reset</button>
+                <input id="color" type="color" value="#00eeff" class="color">
+            </div>
+            <div class="draw-navbar draw-text-color">
+                use Ctrl left + click for removing , hold click or click for drawing
+            </div>
+            <div class="draw-board"></div>
+        </div>
     </div>
 </footer>
 </html>

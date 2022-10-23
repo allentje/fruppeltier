@@ -17,3 +17,7 @@ body {
 .rainbow_box {
     background-color: #363636;
 }
+
+.draw-text-color {
+    color: black
+}
