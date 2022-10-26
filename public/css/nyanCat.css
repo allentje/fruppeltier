@@ -194,3 +194,19 @@
   gap: 3px;
   padding: 3px;
 }
+
+.draw-btn, input{
+  height: 35px;
+  padding: 0 1em;
+}
+.draw-color{
+  padding: 0 .25em;
+  width: 100px;
+  margin: 0 1em;
+}
+
+.draw-pixel{
+  background-color: rgb(61, 61, 61);
+  border-radius: 2px;
+  border: 1px;
+}

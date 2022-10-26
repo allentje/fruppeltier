@@ -19,5 +19,9 @@ body {
 }
 
 .draw-text-color {
-    color: black
+    color: black !important;
+}
+
+.draw-navbar, .draw-board {
+    background-color: #ececec;
 }

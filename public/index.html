@@ -37,7 +37,7 @@
                 </span>
             </div>
             <button id="theme-toggle">Light mode</button>
-            <audio id="theme-song" class="audio-control" controls autoplay loop src="https://fruppeltier.de/audio/audio_nyan-cat.ogg"></audio>
+<!--            <audio id="theme-song" class="audio-control" controls autoplay loop src="https://fruppeltier.de/audio/audio_nyan-cat.ogg"></audio>-->
         </div>
     </div>
 </section>
@@ -82,17 +82,16 @@
         .##.......##....##..##.....##.##........##........##.......##..........##.....##..##.......##....##.
         .##.......##.....##..#######..##........##........########.########....##....####.########.##.....##
     </div>
-    <div>
-        <button id="draw-toggle">Draw nyan cat</button>
+    <div class="mb-20">
+        <button id="draw-toggle">Draw nyan head</button>
         <div id="draw-container" style="display: none">
             <div class="draw-navbar">
-                <button id="btnReset" class="btn">Reset</button>
-                <input id="color" type="color" value="#00eeff" class="color">
+                <button id="btnReset" class="draw-btn">Reset</button>
+                <button id="btnSubmit" class="draw-btn">Submit</button>
+                <input id="color" type="color" value="#00eeff" class="draw-color">
+                <p class="draw-text-color">Ctrl left + click for removing, hold click or click for drawing</p>
             </div>
-            <div class="draw-navbar draw-text-color">
-                use Ctrl left + click for removing , hold click or click for drawing
-            </div>
-            <div class="draw-board"></div>
+            <div id="draw-board" class="draw-board"></div>
         </div>
     </div>
 </footer>

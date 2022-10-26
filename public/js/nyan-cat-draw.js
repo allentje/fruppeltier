@@ -1,178 +1,153 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     let drawToggle = document.getElementById('draw-toggle');
-    let drawContainer = document.getElementById('draw-container')
+    let drawContainer = document.getElementById('draw-container');
+    let drawBoard = document.getElementById('draw-board');
+    const color = document.querySelector('#color');
+    const resetBtn = document.querySelector('#btnReset');
+    const submitBtn = document.querySelector('#btnSubmit')
+    let draw = false
+    const defaultColor = '#3D3D3DFF'
+    let nyanCatHead = document.querySelector('.nyancat .head');
+
+    let defaultBoxShadow = getComputedStyle(nyanCatHead).boxShadow;
+
+    /** Setting the board with X Y and the option for relocation **/
+    const sizeElWidth = 16;
+    const sizeElHeight = 18;
+    const relocationAxisY = -3;
+
+    resetBtn.addEventListener('click', reset)
+    submitBtn.addEventListener('click', submit)
 
     drawToggle.addEventListener('click', () => {
 
         if(drawToggle.innerText.includes('Hide')){
-            drawToggle.innerText = 'Draw nyan cat'
+            drawToggle.innerText = 'Draw nyan head'
             drawContainer.style.display = 'none';
             return;
         }
 
-        drawToggle.innerText = 'Hide'
+        drawToggle.innerText = 'Hide drawing board'
         drawContainer.style.display = 'block';
 
     })
-})
 
+    window.addEventListener("mousedown", function(){
+        draw = true
+    })
+    window.addEventListener("mouseup", function(){
+        draw = false
+    })
 
+    function populate(sizeWidth, sizeHeight) {
+        drawBoard.style.setProperty('--sizeWidth', sizeWidth)
+        drawBoard.style.setProperty('--sizeHeight', sizeHeight)
+        for (let i = relocationAxisY; i < sizeHeight; i++) {
+            for (let k = 0; k < sizeWidth; k++) {
+                const div = document.createElement('div')
+                div.classList.add('draw-pixel')
+                div.dataset.axisX = '' + k;
+                div.dataset.axisY = '' + i;
+                div.addEventListener('mouseover', function(e){
+                    if(!draw) return
+                    drawPixel(div, e.ctrlKey);
+                })
+                div.addEventListener('mousedown', function(e){
+                    drawPixel(div, e.ctrlKey);
+                })
+                drawBoard.appendChild(div)
+            }
+        }
 
-const container = document.querySelector('.draw-board');
-const color = document.querySelector('#color');
-const resetBtn = document.querySelector('#btnReset');
+        drawFromBoxShadow(defaultBoxShadow);
+        nyanCatHead.style.setProperty('--boxShadow', defaultBoxShadow);
+    }
 
-let nyanCatHead = document.querySelector('.nyancat .head');
-
-function populate(sizeWidth, sizeHeight) {
-    for (let i = 0; i < sizeHeight; i++) {
-        for (let k = 0; k < sizeWidth; k++) {
-            const div = document.createElement('div')
-            div.classList.add('pixel')
-            div.dataset.axisX = '' + k;
-            div.dataset.axisY = '' + i;
-            div.addEventListener('mouseover', function(e){
-                if(!draw) return
-                drawPixel(div, e.ctrlKey);
-            })
-            div.addEventListener('mousedown', function(e){
-                drawPixel(div, e.ctrlKey);
-            })
-            container.appendChild(div)
+    function drawPixel(element, isCtrlKey) {
+        element.style.backgroundColor = color.value
+        if(isCtrlKey) {
+            element.style.backgroundColor = defaultColor
         }
     }
-}
-populate(20, 20);
 
-const convertToShadowBtn = document.querySelector('#btnConvertToShadow')
-const shadowToPixelBtn = document.querySelector('#btnShadowToPixel')
-const generateText = document.querySelector('#generateText')
-const manipulatedFactorInput = document.querySelector('#manipulatedFactor')
-// getComputedStyle(test).boxShadow
-let draw = false
-const defaultColor = '#3D3D3DFF'
-let manipulatedFactor = parseInt(manipulatedFactorInput.value);
+    function reset(){
+        drawBoard.innerHTML = ''
+        populate(sizeElWidth, sizeElHeight)
+    }
 
-window.addEventListener("mousedown", function(){
-    draw = true
-})
-window.addEventListener("mouseup", function(){
-    draw = false
-})
+    function submit() {
+        let boxShadow = getBoxShadowFromBoard();
+        nyanCatHead.style.setProperty('--boxShadow', boxShadow)
+    }
 
-resetBtn.addEventListener('click', reset)
+    function getBoxShadowFromBoard() {
+        let shadow = [];
 
-sizeElWidth.addEventListener('keyup', function(){
-    sizeWidth = sizeElWidth.value
-    reset()
-})
+        for (let i = relocationAxisY; i < sizeElWidth; i++) {
+            for (let k = 0; k < sizeElHeight; k++) {
+                const div = document.querySelector(`[data-axis-x="${k}"][data-axis-y="${i}"]`);
 
-sizeElHeight.addEventListener('keyup', function(){
-    sizeHeight = sizeElHeight.value
-    reset()
-})
+                if (div === null) {
+                    continue;
+                }
 
-manipulatedFactorInput.addEventListener('keyup', function(){
-    manipulatedFactor = parseInt(manipulatedFactorInput.value);
-})
+                let color = div.style.backgroundColor;
 
-convertToShadowBtn.addEventListener('click', function () {
-    let shadow = [];
+                if (color === defaultColor || color === '') {
+                    continue;
+                }
 
-    for (let i = 0; i < sizeElWidth.value; i++) {
-        for (let k = 0; k < sizeElHeight.value; k++) {
-            const div = document.querySelector(`[data-axis-x="${k}"][data-axis-y="${i}"]`);
+                shadow.push(convertRgbToHex(color) + ' ' + (k*4) + 'px ' + (i*4) + 'px 0px');
+            }
+        }
+        return shadow.join(', ');
+    }
+
+    function drawFromBoxShadow(boxShadow) {
+        let shadowArray = boxShadow.split('px, ');
+
+        for (let i = 0; i < shadowArray.length; i++) {
+            let shadow = shadowArray[i];
+
+            let shadowElArray = shadow.split(') ');
+
+            shadowElArray[0] = shadowElArray[0] + ')';
+
+            let color = convertRgbToHex(shadowElArray[0]);
+            let pixelArray = shadowElArray[1].split(' ');
+
+            if (pixelArray.length < 3) {
+                continue;
+            }
+
+
+            let axisX = parseInt(pixelArray[0])/4;
+            let axisY = parseInt(pixelArray[1])/4;
+
+            const div = document.querySelector(`[data-axis-x="${axisX}"][data-axis-y="${axisY}"]`);
 
             if (div === null) {
                 continue;
             }
-
-            let color = div.style.backgroundColor;
-
-            if (color === defaultColor || color === '') {
-                continue;
-            }
-
-            shadow.push((k*manipulatedFactor) + 'px ' + (i*manipulatedFactor) + 'px 0 ' + convertRgbToHex(color));
+            div.style.backgroundColor = color;
         }
     }
-    shadow = shadow.join(', ');
-    generateText.value = shadow;
+
+    function convertRgbToHex(colorRgb) {
+
+        if (colorRgb.includes("rgb(") === false) {
+            return colorRgb;
+        }
+
+        let color = colorRgb.split("(")[1].split(")")[0];
+        color = color.split(",");
+        let hex = color.map(function(x){
+            x = parseInt(x).toString(16);
+            return (x.length===1) ? "0"+x : x;
+        })
+        return "#" + hex.join("");
+    }
+
+    populate(sizeElWidth, sizeElHeight);
 })
-
-shadowToPixelBtn.addEventListener('click', function() {
-    let shadowValue = generateText.value;
-    let shadowArray = shadowValue.split(', ');
-
-    for (let i = 0; i < shadowArray.length; i++) {
-        let shadow = shadowArray[i];
-
-        let pixelArray = shadow.split(' ');
-
-        if (pixelArray.length < 3) {
-            continue;
-        }
-
-
-        let axisX = parseInt(pixelArray[0])/manipulatedFactor;
-        let axisY = parseInt(pixelArray[1])/manipulatedFactor;
-
-        const div = document.querySelector(`[data-axis-x="${axisX}"][data-axis-y="${axisY}"]`);
-
-        if (div === null) {
-            continue;
-        }
-        div.style.backgroundColor = pixelArray.length === 3 ? pixelArray[2] : pixelArray[3];
-    }
-});
-
-populate(sizeWidth, sizeHeight)
-
-function convertRgbToHex(colorRgb) {
-
-    if (colorRgb.includes("rgb(") === false) {
-        return colorRgb;
-    }
-
-    let color = colorRgb.split("(")[1].split(")")[0];
-    color = color.split(",");
-    let hex = color.map(function(x){
-        x = parseInt(x).toString(16);
-        return (x.length===1) ? "0"+x : x;
-    })
-    return "#" + hex.join("");
-}
-
-function reset(){
-    container.innerHTML = ''
-    populate(sizeWidth, sizeHeight)
-}
-
-function populate(sizeWidth, sizeHeight) {
-    container.style.setProperty('--sizeWidth', sizeWidth)
-    container.style.setProperty('--sizeHeight', sizeHeight)
-    for (let i = 0; i < sizeHeight; i++) {
-        for (let k = 0; k < sizeWidth; k++) {
-            const div = document.createElement('div')
-            div.classList.add('pixel')
-            div.dataset.axisX = '' + k;
-            div.dataset.axisY = '' + i;
-            div.addEventListener('mouseover', function(e){
-                if(!draw) return
-                drawPixel(div, e.ctrlKey);
-            })
-            div.addEventListener('mousedown', function(e){
-                drawPixel(div, e.ctrlKey);
-            })
-            container.appendChild(div)
-        }
-    }
-}
-
-function drawPixel(element, isCtrlKey) {
-    element.style.backgroundColor = color.value
-    if(isCtrlKey) {
-        element.style.backgroundColor = defaultColor
-    }
-}

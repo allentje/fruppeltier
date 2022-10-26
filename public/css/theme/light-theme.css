@@ -19,5 +19,9 @@ body {
 }
 
 .draw-text-color {
-    color: white;
+    color: whitesmoke !important;
+}
+
+.draw-navbar, .draw-board {
+    background-color: rgb(28, 28, 29);
 }
