@@ -1,3 +1,11 @@
+/** Setting the board with X Y and the option for relocation
+    You can also change the setting from the dev Tool on browser.
+    E.g: sizeElWidth = 20 and click reset Button
+**/
+let sizeElWidth = 16;
+let sizeElHeight = 18;
+let relocationAxisY = -3;
+
 document.addEventListener('DOMContentLoaded', () => {
 
     let drawToggle = document.getElementById('draw-toggle');
@@ -11,11 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let nyanCatHead = document.querySelector('.nyancat .head');
 
     let defaultBoxShadow = getComputedStyle(nyanCatHead).boxShadow;
-
-    /** Setting the board with X Y and the option for relocation **/
-    const sizeElWidth = 16;
-    const sizeElHeight = 18;
-    const relocationAxisY = -3;
 
     resetBtn.addEventListener('click', reset)
     submitBtn.addEventListener('click', submit)
