@@ -17,3 +17,11 @@ body {
 .rainbow_box {
     background-color: #363636;
 }
+
+.draw-text-color {
+    color: black !important;
+}
+
+.draw-navbar, .draw-board {
+    background-color: #ececec;
+}

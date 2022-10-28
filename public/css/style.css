@@ -86,3 +86,7 @@ html {
     from {left: 0}
     to {left: 92%}
 }
+
+.mb-20 {
+    margin-bottom: 20px;
+}
